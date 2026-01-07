@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Plane } from "lucide-react"
+import type { TravelInput } from "@/types/travel"
+import type { Budget, TravelInterest, TravelStyle } from "@/types/travel"
 
 const INTERESTS = [
   { id: "food", label: "Food" },
@@ -23,13 +25,13 @@ const INTERESTS = [
 export function TravelForm() {
   const [destination, setDestination] = useState("")
   const [tripLength, setTripLength] = useState("")
-  const [budget, setBudget] = useState("")
-  const [interests, setInterests] = useState<string[]>([])
-  const [travelStyle, setTravelStyle] = useState("")
+  const [budget, setBudget] = useState<Budget>("medium")
+const [travelStyle, setTravelStyle] = useState<TravelStyle>("balanced")
+const [interests, setInterests] = useState<TravelInterest[]>([])
   const router = useRouter()
 
 
-  const handleInterestChange = (interestId: string, checked: boolean) => {
+  const handleInterestChange = (interestId: TravelInterest, checked: boolean) => {
     if (checked) {
       setInterests([...interests, interestId])
     } else {
@@ -40,6 +42,16 @@ export function TravelForm() {
 const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault()
   router.push("/results")
+
+  const payload: TravelInput = {
+  destination,
+  tripLength: Number(tripLength),
+  budget,
+  interests,
+  travelStyle,
+}
+
+console.log(payload)
 }
 
   const isFormValid = destination && tripLength && budget && interests.length > 0 && travelStyle
@@ -88,7 +100,7 @@ const handleSubmit = (e: React.FormEvent) => {
             <Label htmlFor="budget" className="text-base">
               Budget
             </Label>
-            <Select value={budget} onValueChange={setBudget} required>
+            <Select value={budget} onValueChange={(value) => setBudget(value as Budget)} required>
               <SelectTrigger id="budget" className="h-11">
                 <SelectValue placeholder="Select your budget range" />
               </SelectTrigger>
@@ -107,8 +119,8 @@ const handleSubmit = (e: React.FormEvent) => {
                 <div key={interest.id} className="flex items-center space-x-3">
                   <Checkbox
                     id={interest.id}
-                    checked={interests.includes(interest.id)}
-                    onCheckedChange={(checked) => handleInterestChange(interest.id, checked as boolean)}
+                    checked={interests.includes(interest.id as TravelInterest)}
+                    onCheckedChange={(checked) => handleInterestChange(interest.id as TravelInterest, checked as boolean)}
                   />
                   <Label
                     htmlFor={interest.id}
@@ -123,7 +135,7 @@ const handleSubmit = (e: React.FormEvent) => {
 
           <div className="space-y-3">
             <Label className="text-base">Travel Style</Label>
-            <RadioGroup value={travelStyle} onValueChange={setTravelStyle} required>
+            <RadioGroup value={travelStyle} onValueChange={(value) => setTravelStyle(value as TravelStyle)} required>
               <div className="flex items-center space-x-3">
                 <RadioGroupItem value="relaxed" id="relaxed" />
                 <Label htmlFor="relaxed" className="cursor-pointer text-base font-normal">

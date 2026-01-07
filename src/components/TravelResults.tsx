@@ -2,31 +2,24 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DollarSign, MapPin, Sun, PlaneIcon } from "lucide-react"
+import type { TravelOutput } from "@/types/travel"
 
-const mockData = {
-  destination: "Mexico",
-  tripLength: 10,
-  budget: "medium",
-  interests: ["food", "culture"],
-  travelStyle: "balanced",
-  bestTimeToVisit: "April–June and September–October",
-  flightAdvice: "Book 6–8 weeks in advance for best prices.",
-  stayArea: "Central neighborhoods close to food and transit.",
-  itinerary: [
-    { day: 1, title: "Arrival & Explore", description: "Settle in and explore nearby streets." },
-    { day: 2, title: "Local Highlights", description: "Visit top cultural spots and food areas." },
-  ],
+const mockInput = {
+  destination: "Barcelona",
+  tripLength: 5,
+  budget: "medium" as const,
+  interests: ["food", "culture", "nightlife"] as const,
+  travelStyle: "balanced" as const,
 }
-
 
 export function TravelResults() {
   // Generate day-by-day itinerary based on trip length
   const generateItinerary = () => {
     const itinerary = []
-    for (let i = 1; i <= mockData.tripLength; i++) {
+    for (let i = 1; i <= mockInput.tripLength; i++) {
       itinerary.push({
         day: i,
-        title: `Explore ${mockData.destination}`,
+        title: `Explore ${mockInput.destination}`,
         activities: [
           "Morning: Visit local attractions and landmarks",
           "Afternoon: Enjoy authentic cuisine",
@@ -43,8 +36,8 @@ export function TravelResults() {
     <div className="space-y-6">
 
       <div className="space-y-1 text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-balance">Your {mockData.destination} Adventure Awaits</h2>
-        <p className="text-muted-foreground text-lg">Here&apos;s your personalized {mockData.itinerary.length}-day itinerary</p>
+        <h2 className="text-3xl font-bold tracking-tight text-balance">Your {mockInput.destination} Adventure Awaits</h2>
+        <p className="text-muted-foreground text-lg">Here&apos;s your personalized {mockInput.tripLength}-day itinerary</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -57,7 +50,7 @@ export function TravelResults() {
           </CardHeader>
           <CardContent>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              The ideal time to visit {mockData.destination} is during the spring and fall months when the weather is
+              The ideal time to visit {mockInput.destination} is during the spring and fall months when the weather is
               pleasant and attractions are less crowded.
             </p>
           </CardContent>
@@ -132,8 +125,8 @@ export function TravelResults() {
             <div>
               <h4 className="font-semibold text-secondary-foreground">Budget Estimate</h4>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                Based on your {mockData.budget} budget preference, expect to spend approximately $
-                {mockData.budget === "low" ? "50-100" : mockData.budget === "medium" ? "100-200" : "200-400"} per day including
+                Based on your {mockInput.budget} budget preference, expect to spend approximately $
+                {mockInput.budget === "low" ? "50-100" : mockInput.budget === "medium" ? "100-200" : "200-400"} per day including
                 accommodation, meals, and activities.
               </p>
             </div>
