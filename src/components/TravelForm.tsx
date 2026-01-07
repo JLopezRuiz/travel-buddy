@@ -12,16 +12,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Plane } from "lucide-react"
 
-interface TravelFormProps {
-  onSubmit: (data: {
-    destination: string
-    tripLength: number
-    budget: string
-    interests: string[]
-    travelStyle: string
-  }) => void
-}
-
 const INTERESTS = [
   { id: "food", label: "Food" },
   { id: "nature", label: "Nature" },
@@ -50,13 +40,6 @@ export function TravelForm() {
 const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault()
   router.push("/results")
-  console.log({
-    destination,
-    tripLength: Number(tripLength),
-    budget,
-    interests,
-    travelStyle,
-  })
 }
 
   const isFormValid = destination && tripLength && budget && interests.length > 0 && travelStyle
@@ -66,7 +49,7 @@ const handleSubmit = (e: React.FormEvent) => {
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Plan Your Trip</CardTitle>
         <CardDescription className="text-base">
-          Tell us about your travel preferences and we'll help you plan the perfect itinerary
+          Tell us about your travel preferences and we&apos;ll help you plan the perfect itinerary
         </CardDescription>
       </CardHeader>
       <CardContent>

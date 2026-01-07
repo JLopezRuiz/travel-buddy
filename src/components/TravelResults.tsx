@@ -1,28 +1,32 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, DollarSign, MapPin, Sun, PlaneIcon } from "lucide-react"
+import { DollarSign, MapPin, Sun, PlaneIcon } from "lucide-react"
 
-interface TravelResultsProps {
-  data: {
-    destination: string
-    tripLength: number
-    budget: string
-    interests: string[]
-    travelStyle: string
-  }
-  onBack: () => void
+const mockData = {
+  destination: "Mexico",
+  tripLength: 10,
+  budget: "medium",
+  interests: ["food", "culture"],
+  travelStyle: "balanced",
+  bestTimeToVisit: "April–June and September–October",
+  flightAdvice: "Book 6–8 weeks in advance for best prices.",
+  stayArea: "Central neighborhoods close to food and transit.",
+  itinerary: [
+    { day: 1, title: "Arrival & Explore", description: "Settle in and explore nearby streets." },
+    { day: 2, title: "Local Highlights", description: "Visit top cultural spots and food areas." },
+  ],
 }
 
-export function TravelResults({ data, onBack }: TravelResultsProps) {
+
+export function TravelResults() {
   // Generate day-by-day itinerary based on trip length
   const generateItinerary = () => {
     const itinerary = []
-    for (let i = 1; i <= data.tripLength; i++) {
+    for (let i = 1; i <= mockData.tripLength; i++) {
       itinerary.push({
         day: i,
-        title: `Explore ${data.destination}`,
+        title: `Explore ${mockData.destination}`,
         activities: [
           "Morning: Visit local attractions and landmarks",
           "Afternoon: Enjoy authentic cuisine",
@@ -37,14 +41,10 @@ export function TravelResults({ data, onBack }: TravelResultsProps) {
 
   return (
     <div className="space-y-6">
-      <Button variant="ghost" onClick={onBack} className="mb-2">
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Back to Form
-      </Button>
 
       <div className="space-y-1 text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-balance">Your {data.destination} Adventure Awaits</h2>
-        <p className="text-muted-foreground text-lg">Here&#39;s your personalized {data.tripLength}-day itinerary</p>
+        <h2 className="text-3xl font-bold tracking-tight text-balance">Your {mockData.destination} Adventure Awaits</h2>
+        <p className="text-muted-foreground text-lg">Here&apos;s your personalized {mockData.itinerary.length}-day itinerary</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -57,7 +57,7 @@ export function TravelResults({ data, onBack }: TravelResultsProps) {
           </CardHeader>
           <CardContent>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              The ideal time to visit {data.destination} is during the spring and fall months when the weather is
+              The ideal time to visit {mockData.destination} is during the spring and fall months when the weather is
               pleasant and attractions are less crowded.
             </p>
           </CardContent>
@@ -132,8 +132,8 @@ export function TravelResults({ data, onBack }: TravelResultsProps) {
             <div>
               <h4 className="font-semibold text-secondary-foreground">Budget Estimate</h4>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                Based on your {data.budget} budget preference, expect to spend approximately $
-                {data.budget === "low" ? "50-100" : data.budget === "medium" ? "100-200" : "200-400"} per day including
+                Based on your {mockData.budget} budget preference, expect to spend approximately $
+                {mockData.budget === "low" ? "50-100" : mockData.budget === "medium" ? "100-200" : "200-400"} per day including
                 accommodation, meals, and activities.
               </p>
             </div>
