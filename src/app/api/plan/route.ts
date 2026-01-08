@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server"
-import type { TravelInput, TravelOutput } from "@/types/travel"
+import type { TravelInput } from "@/types/travel"
+import { generateTravelPlan } from "@/lib/generateTravelPlan"
 
-export async function POST(req: Request) {
-  const body = (await req.json()) as TravelInput
-
-  const mockResponse: TravelOutput = {
-    bestTimeToVisit: "April–June and September–October",
-    flightAdvice: "Book flights 6–8 weeks in advance.",
-    stayArea: "Central neighborhoods close to food and transit.",
-    itinerary: [],
+export const POST = async (req: Request) => {
+  try {
+    const input = (await req.json()) as TravelInput
+    const plan = await generateTravelPlan(input)
+    return NextResponse.json(plan)
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json({ error: "Failed to generate travel plan" }, { status: 500 })
   }
-
-  return NextResponse.json(mockResponse)
 }
