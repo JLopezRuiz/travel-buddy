@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Plane } from "lucide-react"
 import type { TravelInput } from "@/types/travel"
 import type { Budget, TravelInterest, TravelStyle } from "@/types/travel"
+import { on } from "events"
 
 const INTERESTS = [
   { id: "food", label: "Food" },
@@ -22,7 +23,11 @@ const INTERESTS = [
   { id: "nightlife", label: "Nightlife" },
 ]
 
-export const TravelForm = () => {
+interface TravelFormProps {
+  onSubmit: (data: TravelInput) => void
+}
+
+export const TravelForm = ({ onSubmit }: TravelFormProps) => {
   const [destination, setDestination] = useState("")
   const [tripLength, setTripLength] = useState("")
   const [budget, setBudget] = useState<Budget>("medium")
@@ -50,7 +55,7 @@ const handleSubmit = (e: React.FormEvent) => {
   interests,
   travelStyle,
 }
-
+onSubmit(payload)
 console.log(payload)
 }
 
