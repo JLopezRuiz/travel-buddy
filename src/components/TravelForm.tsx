@@ -22,7 +22,7 @@ const INTERESTS = [
   { id: "nightlife", label: "Nightlife" },
 ]
 
-export function TravelForm() {
+export const TravelForm = () => {
   const [destination, setDestination] = useState("")
   const [tripLength, setTripLength] = useState("")
   const [budget, setBudget] = useState<Budget>("medium")

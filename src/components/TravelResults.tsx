@@ -2,17 +2,17 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DollarSign, MapPin, Sun, PlaneIcon } from "lucide-react"
-import type { TravelOutput } from "@/types/travel"
+import type { Budget, TravelInterest, TravelStyle } from "@/types/travel"
 
 const mockInput = {
   destination: "Barcelona",
   tripLength: 5,
-  budget: "medium" as const,
-  interests: ["food", "culture", "nightlife"] as const,
-  travelStyle: "balanced" as const,
+  budget: "medium" as Budget,
+  interests: ["food", "culture", "nightlife"] as TravelInterest[],
+  travelStyle: "balanced" as TravelStyle,
 }
 
-export function TravelResults() {
+export const TravelResults = () => {
   // Generate day-by-day itinerary based on trip length
   const generateItinerary = () => {
     const itinerary = []
