@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,7 +12,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Plane } from "lucide-react"
 import type { TravelInput } from "@/types/travel"
 import type { Budget, TravelInterest, TravelStyle } from "@/types/travel"
-import { on } from "events"
 
 const INTERESTS = [
   { id: "food", label: "Food" },
@@ -31,9 +29,8 @@ export const TravelForm = ({ onSubmit }: TravelFormProps) => {
   const [destination, setDestination] = useState("")
   const [tripLength, setTripLength] = useState("")
   const [budget, setBudget] = useState<Budget>("medium")
-const [travelStyle, setTravelStyle] = useState<TravelStyle>("balanced")
-const [interests, setInterests] = useState<TravelInterest[]>([])
-  const router = useRouter()
+  const [travelStyle, setTravelStyle] = useState<TravelStyle>("balanced")
+  const [interests, setInterests] = useState<TravelInterest[]>([])
 
 
   const handleInterestChange = (interestId: TravelInterest, checked: boolean) => {
@@ -44,20 +41,19 @@ const [interests, setInterests] = useState<TravelInterest[]>([])
     }
   }
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault()
-  router.push("/results")
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
 
-  const payload: TravelInput = {
-  destination,
-  tripLength: Number(tripLength),
-  budget,
-  interests,
-  travelStyle,
-}
-onSubmit(payload)
-console.log(payload)
-}
+    const payload: TravelInput = {
+      destination,
+      tripLength: Number(tripLength),
+      budget,
+      interests,
+      travelStyle,
+    }
+    onSubmit(payload)
+    console.log(payload)
+  }
 
   const isFormValid = destination && tripLength && budget && interests.length > 0 && travelStyle
 
