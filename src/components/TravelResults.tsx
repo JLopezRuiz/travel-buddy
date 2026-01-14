@@ -1,33 +1,62 @@
-"use client"
+import type { TravelOutput } from "@/types/travel"
 
-import {TravelOutput} from "@/types/travel"
-
-interface TravelResultsProps {
-  data: TravelOutput
-  onBack: () => void
+type TravelResultsProps = {
+  data?: TravelOutput | null
+  onBack?: () => void
 }
 
 export const TravelResults = ({ data, onBack }: TravelResultsProps) => {
+  if (!data) {
+    return (
+      <div className="text-center text-muted-foreground">
+        No travel plan generated yet.
+      </div>
+    )
+  }
+
+  const { bestTimeToVisit, flightAdvice, stayArea, itinerary } = data
+
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-2">Your Travel Plan</h2>
-      <p><strong>Best Time to Visit:</strong> {data.bestTimeToVisit}</p>
-      <p><strong>Flight Advice:</strong> {data.flightAdvice}</p>
-      <p><strong>Where to Stay:</strong> {data.stayArea}</p>
+    <div className="space-y-6">
+      <section>
+        <h2 className="text-xl font-semibold">Best Time to Visit</h2>
+        <p>{bestTimeToVisit}</p>
+      </section>
 
-      <h3 className="text-xl font-semibold mt-4">Itinerary</h3>
-      <ul>
-        {data.itinerary.map((item) => (
-          <li key={item.day}>
-            <strong>Day {item.day}:</strong> {item.title} — {item.description}
-          </li>
-        ))}
-      </ul>
+      <section>
+        <h2 className="text-xl font-semibold">Flight Advice</h2>
+        <p>{flightAdvice}</p>
+      </section>
 
-      <button onClick={onBack} className="mt-4 px-4 py-2 bg-gray-200 rounded">
-        Back
-      </button>
+      <section>
+        <h2 className="text-xl font-semibold">Where to Stay</h2>
+        <p>{stayArea}</p>
+      </section>
+
+      <section>
+        <h2 className="text-xl font-semibold">Itinerary</h2>
+
+        {!Array.isArray(itinerary) ? (
+          <p className="text-red-500">
+            Itinerary data is missing or invalid.
+          </p>
+        ) : (
+          <ul className="space-y-4">
+            {itinerary.map((day) => (
+              <li key={day.day}>
+                <strong>Day {day.day}: {day.title}</strong>
+                <p>{day.description}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {onBack && (
+        <button onClick={onBack} className="btn-secondary">
+          Back
+        </button>
+      )}
     </div>
   )
 }
-
