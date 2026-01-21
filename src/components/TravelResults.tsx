@@ -1,4 +1,5 @@
 import type { TravelOutput } from "@/types/travel"
+import { Button } from "./ui/button"
 
 type TravelResultsProps = {
   data?: TravelOutput | null
@@ -6,13 +7,17 @@ type TravelResultsProps = {
 }
 
 export const TravelResults = ({ data, onBack }: TravelResultsProps) => {
-  if (!data) {
+  if (!data || !Array.isArray(data.itinerary)) {
     return (
-      <div className="text-center text-muted-foreground">
-        No travel plan generated yet.
+      <div className="text-center">
+        <p>We couldn’t generate your itinerary.</p>
+        <Button onClick={onBack} className="mt-4">
+          Back
+        </Button>
       </div>
     )
   }
+
 
   const { bestTimeToVisit, flightAdvice, stayArea, itinerary } = data
 
