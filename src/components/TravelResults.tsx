@@ -1,5 +1,7 @@
 import type { TravelOutput } from "@/types/travel"
 import { Button } from "./ui/button"
+import { Section } from "./ui/section"
+import { Itinerary } from "./Itinerary"
 
 type TravelResultsProps = {
   data?: TravelOutput | null
@@ -18,50 +20,26 @@ export const TravelResults = ({ data, onBack }: TravelResultsProps) => {
     )
   }
 
-
-  const { bestTimeToVisit, flightAdvice, stayArea, itinerary } = data
-
   return (
-    <div className="space-y-6">
-      <section>
-        <h2 className="text-xl font-semibold">Best Time to Visit</h2>
-        <p>{bestTimeToVisit}</p>
-      </section>
+    <div className="space-y-8">
+      <Section title="Best Time to Visit">
+        {data.bestTimeToVisit}
+      </Section>
 
-      <section>
-        <h2 className="text-xl font-semibold">Flight Advice</h2>
-        <p>{flightAdvice}</p>
-      </section>
+      <Section title="Flight Advice">
+        {data.flightAdvice}
+      </Section>
 
-      <section>
-        <h2 className="text-xl font-semibold">Where to Stay</h2>
-        <p>{stayArea}</p>
-      </section>
+      <Section title="Where to Stay">
+        {data.stayArea}
+      </Section>
 
-      <section>
-        <h2 className="text-xl font-semibold">Itinerary</h2>
+      <Itinerary itinerary={data.itinerary} />
 
-        {!Array.isArray(itinerary) ? (
-          <p className="text-red-500">
-            Itinerary data is missing or invalid.
-          </p>
-        ) : (
-          <ul className="space-y-4">
-            {itinerary.map((day) => (
-              <li key={day.day}>
-                <strong>Day {day.day}: {day.title}</strong>
-                <p>{day.description}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      {onBack && (
-        <button onClick={onBack} className="btn-secondary">
-          Back
-        </button>
-      )}
+      <div className="text-center">
+        <Button onClick={onBack}>Plan another trip</Button>
+      </div>
     </div>
   )
 }
+
