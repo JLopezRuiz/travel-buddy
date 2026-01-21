@@ -20,15 +20,12 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(input),
       })
-      const data = await res.json()
-
-      if (!data.success) {
-        throw new Error(data.message)
-      }
+      const data = (await res.json()) as TravelOutput
 
       setPlan(data)
+      
     } catch (err) {
-      setError("Something went wrong. Please try again." + err)
+      setError("Something went wrong. Please try again. " + err)
     } finally {
       setLoading(false)
     }
@@ -50,6 +47,7 @@ export default function HomePage() {
           </p>
         </div>
       )}
+      
       {error && (
         <div className="mt-4 text-center">
           <p className="text-red-500 mb-2">{error}</p>
