@@ -1,5 +1,6 @@
 import type { TravelInput, TravelOutput } from "@/types/travel"
 import { generateTravelPlan } from "../generateTravelPlan"
+import { buildItinerary } from "./buildItinerary"
 
 export const travelBuddyAgent = async (
   input: TravelInput
@@ -8,6 +9,6 @@ export const travelBuddyAgent = async (
 
   return {
     ...plan,
-    itinerary: plan.itinerary.slice(0, input.tripLength),
+    itinerary: buildItinerary(plan.itinerary, input),
   }
 }
