@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { TravelForm } from "@/components/TravelForm"
 import { TravelResults } from "@/components/TravelResults"
@@ -9,6 +9,21 @@ export default function HomePage() {
   const [plan, setPlan] = useState<TravelOutput | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Persist plan to localStorage
+  useEffect(() => {
+    if (plan) {
+      localStorage.setItem("latestPlan", JSON.stringify(plan))
+    }
+  }, [plan])
+
+  // Load plan from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("latestPlan")
+    if (saved) {
+      setPlan(JSON.parse(saved))
+    }
+  }, [])
 
   const handleSubmit = async (input: TravelInput) => {
     setLoading(true)
@@ -23,7 +38,7 @@ export default function HomePage() {
       const data = (await res.json()) as TravelOutput
 
       setPlan(data)
-      
+
     } catch (err) {
       setError("Something went wrong. Please try again. " + err)
     } finally {
@@ -47,7 +62,7 @@ export default function HomePage() {
           </p>
         </div>
       )}
-      
+
       {error && (
         <div className="mt-4 text-center">
           <p className="text-red-500 mb-2">{error}</p>
