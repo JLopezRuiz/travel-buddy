@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server"
-import { generateTravelPlan } from "@/lib/generateTravelPlan"
+import { travelBuddyAgent } from "@/lib/agent/travelBuddyAgent"
 import type { TravelInput } from "@/types/travel"
 
 export const POST = async (req: Request) => {
   try {
     const input = (await req.json()) as TravelInput
-    const plan = await generateTravelPlan(input)
+    const plan = await travelBuddyAgent(input)
     return NextResponse.json(plan)
   } catch (err) {
     console.error(err)
