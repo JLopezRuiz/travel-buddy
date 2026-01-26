@@ -1,8 +1,6 @@
 import type { TravelInput, TravelOutput } from "@/types/travel"
-import { GoogleGenerativeAI } from "@google/generative-ai"
 import { travelPlanPrompt } from "./agent/prompts/travelPlanPrompt"
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string)
+import { geminiModel } from "./gemini"
 
 const extractJSON = (text: string): string => {
   const firstBrace = text.indexOf("{")
@@ -16,9 +14,9 @@ const extractJSON = (text: string): string => {
 export const generateTravelPlan = async (
   input: TravelInput,
 ): Promise<TravelOutput> => {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
-  })
+  
+  const model = geminiModel
+
   const userPrompt = `
 Travel Input:
 Destination: ${input.destination}
