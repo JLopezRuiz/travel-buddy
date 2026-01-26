@@ -1,6 +1,6 @@
 import type { TravelInput, TravelOutput } from "@/types/travel"
-import { travelPlanPrompt } from "./agent/prompts/travelPlanPrompt"
-import { geminiModel } from "./gemini"
+import { travelPlanPrompt } from "./prompts/travelPlanPrompt"
+import { geminiModel } from "../gemini"
 
 const extractJSON = (text: string): string => {
   const firstBrace = text.indexOf("{")

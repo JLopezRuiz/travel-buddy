@@ -1,5 +1,5 @@
 import type { TravelInput, TravelOutput } from "@/types/travel"
-import { generateTravelPlan } from "../generateTravelPlan"
+import { generateTravelPlan } from "./generateTravelPlan"
 import { buildItinerary } from "./buildItinerary"
 
 export const travelBuddyAgent = async (
