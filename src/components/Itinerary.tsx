@@ -2,16 +2,17 @@ import { useEffect, useState } from "react"
 import type { ItineraryItem } from "@/types/travel"
 
 export const Itinerary = ({ itinerary }: { itinerary: ItineraryItem[] }) => {
-  const [visibleDays, setVisibleDays] = useState(1)
-
+  const [visibleDays, setVisibleDays] = useState(() => Math.min(1, itinerary.length))
+  
+  // Animate the reveal of itinerary days
   useEffect(() => {
-    if (visibleDays < itinerary.length) {
-      const timer = setTimeout(
-        () => setVisibleDays((v) => v + 1),
-        600
-      )
-      return () => clearTimeout(timer)
-    }
+    if (visibleDays >= itinerary.length) return
+
+    const timer = setTimeout(() => {
+      setVisibleDays((v) => v + 1)
+    }, 600)
+
+    return () => clearTimeout(timer)
   }, [visibleDays, itinerary.length])
 
   return (
