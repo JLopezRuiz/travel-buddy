@@ -6,6 +6,7 @@ import { TravelResults } from "@/components/TravelResults"
 import type { TravelInput, TravelOutput } from "@/types/travel"
 
 export default function HomePage() {
+  const [showForm, setShowForm] = useState(false)
   const [plan, setPlan] = useState<TravelOutput | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -48,7 +49,24 @@ export default function HomePage() {
 
   return (
     <div className="max-w-3xl mx-auto p-4">
-      {!plan && !loading && (
+      {!showForm && !plan && !loading && (
+        <div className="text-center py-24">
+          <h1 className="text-4xl font-bold mb-4">
+            Travel Buddy ✨
+          </h1>
+          <p className="text-muted-foreground mb-8">
+            A stress-free itinerary for busy Type-A travelers
+          </p>
+          <Button
+            size="lg"
+            onClick={() => setShowForm(true)}
+          >
+            Plan my trip
+          </Button>
+        </div>
+      )}
+
+      {showForm && !plan && !loading && (
         <TravelForm onSubmit={handleSubmit} />
       )}
 
@@ -74,7 +92,11 @@ export default function HomePage() {
       {plan && (
         <TravelResults
           data={plan}
-          onBack={() => setPlan(null)}
+          onBack={() => {
+            setPlan(null)
+            setShowForm(false)
+          }}
+
         />
       )}
     </div>
