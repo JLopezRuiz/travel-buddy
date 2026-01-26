@@ -48,20 +48,21 @@ export default function HomePage() {
 
   return (
     <div className="max-w-3xl mx-auto p-4">
-      {!plan ? (
+      {!plan && !loading && (
         <TravelForm onSubmit={handleSubmit} />
-      ) : (
-        <TravelResults data={plan} onBack={() => setPlan(null)} />
       )}
 
-      {loading && (
-        <div className="mt-6 text-center text-muted-foreground">
-          <p className="text-lg">Creating your personalized itinerary ✈️</p>
-          <p className="text-sm mt-1">
-            Considering weather, crowds, food, and vibes…
-          </p>
-        </div>
-      )}
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center">
+        {loading && (
+          <div className="mt-6 text-center text-muted-foreground">
+            <p className="text-lg">Creating your personalized itinerary ✈️</p>
+            <p className="text-sm mt-1">
+              Considering weather, crowds, food, and vibes…
+            </p>
+          </div>
+        )}
+      </div>
+
 
       {error && (
         <div className="mt-4 text-center">
@@ -70,6 +71,12 @@ export default function HomePage() {
         </div>
       )}
 
+      {plan && (
+        <TravelResults
+          data={plan}
+          onBack={() => setPlan(null)}
+        />
+      )}
     </div>
   )
 }
