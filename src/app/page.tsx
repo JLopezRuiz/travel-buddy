@@ -69,17 +69,15 @@ export default function HomePage() {
       {showForm && !plan && !loading && (
         <TravelForm onSubmit={handleSubmit} />
       )}
-      
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        {loading && (
-          <div className="text-center text-muted-foreground">
-            <p className="text-lg">Creating your personalized itinerary ✈️</p>
-            <p className="mt-1 text-sm">
-              Considering weather, crowds, food, and vibes…
-            </p>
-          </div>
-        )}
-      </div>
+
+      {loading && (
+        <div className="flex min-h-screen flex-col items-center justify-center text-center text-muted-foreground">
+          <p className="text-lg">Creating your personalized itinerary ✈️</p>
+          <p className="mt-1 text-sm">
+            Considering weather, crowds, food, and vibes…
+          </p>
+        </div>
+      )}
 
       {error && (
         <div className="mt-4 text-center">
