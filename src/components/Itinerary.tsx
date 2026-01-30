@@ -1,24 +1,45 @@
-import type { ItineraryItem } from "@/types/travel"
+import type { ItineraryRow } from "@/types/travel"
 
-export const Itinerary = ({ itinerary }: { itinerary: ItineraryItem[] }) => {
-  if (!itinerary || itinerary.length === 0) {
-    return null
-  }
-
+export const ItineraryTable = ({ rows }: { rows: ItineraryRow[] }) => {
   return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Your Itinerary</h2>
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[600px] border-collapse text-sm">
+        <thead>
+          <tr className="border-b bg-gray-50 text-left">
+            <th className="py-3 px-4">Day</th>
+            <th className="py-3 px-4">Time</th>
+            <th className="py-3 px-4">Activity</th>
+            <th className="py-3 px-4">Location</th>
+            <th className="py-3 px-4">Link</th>
+          </tr>
+        </thead>
 
-      {itinerary.map((day) => (
-        <div key={day.day} className="border rounded p-4">
-          <h3 className="font-medium">
-            Day {day.day}: {day.title}
-          </h3>
-          <p className="text-muted-foreground mt-1">
-            {day.description}
-          </p>
-        </div>
-      ))}
+        <tbody>
+          {rows.map((row, idx) => (
+            <tr key={idx} className="border-b last:border-0 hover:bg-gray-50">
+              <td className="py-2 px-4 font-medium">{row.day}</td>
+              <td className="py-2 px-4">{row.timeOfDay}</td>
+              <td className="py-2 px-4">{row.activity}</td>
+              <td className="py-2 px-4">{row.location}</td>
+              <td className="py-2 px-4">
+                {row.link === "free" ? (
+                  <span className="text-muted-foreground">Free</span>
+                ) : (
+                  <a
+                    href={row.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline"
+                  >
+                    Tickets
+                  </a>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
+

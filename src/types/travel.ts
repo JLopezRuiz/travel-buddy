@@ -9,6 +9,14 @@ export type TravelInterest =
   | "relaxation"
   | "nightlife"
 
+export type ItineraryRow = {
+  day: number
+  timeOfDay: "Morning" | "Afternoon" | "Evening"
+  activity: string
+  location: string
+  link: string // URL or "free"
+}
+
 export interface TravelInput {
   destination: string
   tripLength: number
@@ -17,15 +25,9 @@ export interface TravelInput {
   travelStyle: TravelStyle
 }
 
-export interface ItineraryItem {
-  day: number
-  title: string
-  description: string
-}
-
 export interface TravelOutput {
   bestTimeToVisit: string
   flightAdvice: string
   stayArea: string
-  itinerary: ItineraryItem[]
+  itinerary: ItineraryRow[]
 }

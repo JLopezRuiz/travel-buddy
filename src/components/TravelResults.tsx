@@ -1,7 +1,7 @@
 import type { TravelOutput } from "@/types/travel"
 import { Button } from "./ui/button"
 import { Section } from "./ui/section"
-import { Itinerary } from "./Itinerary"
+import { ItineraryTable } from "./Itinerary"
 import { formatPlanForClipboard } from "@/lib/utils"
 import { useState } from "react"
 
@@ -23,7 +23,7 @@ export const TravelResults = ({ data, onBack }: TravelResultsProps) => {
       </div>
     )
   }
-
+console.log('TravelResults itinerary:', data.itinerary)
   return (
     <div className="space-y-8">
       <Section title="Best Time to Visit">
@@ -38,7 +38,7 @@ export const TravelResults = ({ data, onBack }: TravelResultsProps) => {
         {data.stayArea}
       </Section>
 
-      <Itinerary itinerary={data.itinerary} />
+      <ItineraryTable rows={data.itinerary} />
 
       <div className="text-center flex gap-4 justify-center">
         <Button

@@ -9,6 +9,6 @@ export const travelBuddyAgent = async (
 
   return {
     ...plan,
-    itinerary: buildItinerary(plan.itinerary, input),
+    itinerary: buildItinerary(plan.itinerary, input.tripLength),
   }
 }
